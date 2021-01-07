@@ -6,28 +6,54 @@ public class CycleShift {
 
     public static void main(String args[]) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        int testCases = Integer.parseInt(scanner.nextLine());
+        int testCases = scanner.nextInt();
         solution(scanner, testCases);
 
-     /*   System.out.println(binaryToDecimal(
-                new char[]{'1', '0', '1', '0', '1'}));
-*/
     }
 
     public static void solution(Scanner scanner, int testCases) {
         while (testCases > 0) {
-            int n = Integer.parseInt(scanner.nextLine());
+            int n = scanner.nextInt();
             int k = scanner.nextInt();
+            Scanner scanner1 = new Scanner(System.in);
+            String str = scanner1.nextLine();
+            int counter = 0;
+            int max = 0;
+            boolean found = true;
+            String str1 = str;
+            for (int i = 0; i < n - 1; i++) {
+                char[] ch = rotateArray(str.toCharArray(), n);
 
-            String str = scanner.nextLine();
-            char chars[] = str.toCharArray();
-            int counter =0;
-            for(int i=0;i<n;i++){
-
-           }
-
+                int sum = binaryToDecimal(ch);
+                if (sum > max) {
+                    max = sum;
+                }
+            }
+            int reached = 0;
+            while (found) {
+                char [] ch1 = rotateArray(str.toCharArray(), n);
+                counter++;
+                if (binaryToDecimal(ch1) == max) {
+                    reached = reached + 1;
+                    System.out.println("reached : " + reached);
+                    if (reached == k) {
+                        System.out.println(counter);
+                        found = false;
+                    }
+                }
+            }
             testCases--;
         }
+    }
+
+
+    public static char[] rotateArray(char[] chars, int n) {
+        char[] temp = new char[n];
+        for (int i = 1; i < n; i++) {
+            temp[i - 1] = chars[i];
+        }
+        temp[n - 1] = chars[0];
+        return temp;
     }
 
     public static int binaryToDecimal(char[] chars) {
